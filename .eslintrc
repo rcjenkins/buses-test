@@ -1,0 +1,26 @@
+{
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "env": {
+    "node": true,
+    "browser": true,
+    "jest": true,
+    "es6": true
+  },
+  "rules": {    
+    "quotes": [
+        "error",
+        "single"
+    ],
+    "semi": [
+        "error",
+        "always"
+    ],
+    "react/prop-types": "off",
+    "no-useless-catch": "off"
+},
+  "extends": ["last", "prettier/react", "plugin:react/recommended"]
+}
