@@ -72,14 +72,14 @@ export const BusStop = () => {
             <Clock format="HH:mm" />
           </div>
         </div>
-        <div>
-          <div className="bus-row ">
+        <ul className="bus-list">
+          <li className="bus-row ">
             <div className="number lighten">--</div>
             <div className="platform lighten">--</div>
             <div className="towards">Loading predictions...</div>
             <div className="arrival">-- mins</div>
-          </div>
-        </div>
+          </li>
+        </ul>
       </div>
     );
   }
@@ -161,49 +161,55 @@ export const BusStop = () => {
               <p>
                 <span className="platform">{group.field}</span>
               </p>
-              {group.groupList.map((bus) => {
-                const expected = bus.TimeToStation;
-                const mins = Math.floor(expected / 60);
-                const arrival =
-                  mins === 0
-                    ? '> 1 min'
-                    : mins === 1
-                    ? '1 min'
-                    : `${mins} mins`;
-                return (
-                  <React.Fragment key={bus.Id}>
-                    <div className="bus-row">
-                      <div className="number"> {bus.LineName}</div>
-                      <div className="towards"> {bus.Towards} </div>
-                      <div className="arrival">
-                        <Shaker updating={bus.updating}>{arrival}</Shaker>
-                      </div>
-                    </div>
-                  </React.Fragment>
-                );
-              })}
+              <ul className="bus-list">
+                {group.groupList.map((bus) => {
+                  const expected = bus.TimeToStation;
+                  const mins = Math.floor(expected / 60);
+                  const arrival =
+                    mins === 0
+                      ? '> 1 min'
+                      : mins === 1
+                      ? '1 min'
+                      : `${mins} mins`;
+                  return (
+                    <React.Fragment key={bus.Id}>
+                      <li className="bus-row">
+                        <div className="number"> {bus.LineName}</div>
+                        <div className="towards"> {bus.Towards} </div>
+                        <div className="arrival">
+                          <Shaker updating={bus.updating}>{arrival}</Shaker>
+                        </div>
+                      </li>
+                    </React.Fragment>
+                  );
+                })}
+              </ul>
             </React.Fragment>
           );
         })}
-      {!grouped &&
-        buses.map((bus) => {
-          const expected = bus.TimeToStation;
-          const mins = Math.floor(expected / 60);
-          const arrival =
-            mins === 0 ? '> 1 min' : mins === 1 ? '1 min' : `${mins} mins`;
-          return (
-            <React.Fragment key={bus.Id}>
-              <div className="bus-row">
-                <div className="number"> {bus.LineName}</div>
-                <div className="platform">{bus.PlatformName}</div>
-                <div className="towards"> {bus.Towards} </div>
-                <div className="arrival">
-                  <Shaker updating={bus.updating}>{arrival}</Shaker>
-                </div>
-              </div>
-            </React.Fragment>
-          );
-        })}
+
+      {!grouped && (
+        <ul className="bus-list">
+          {buses.map((bus) => {
+            const expected = bus.TimeToStation;
+            const mins = Math.floor(expected / 60);
+            const arrival =
+              mins === 0 ? '> 1 min' : mins === 1 ? '1 min' : `${mins} mins`;
+            return (
+              <React.Fragment key={bus.Id}>
+                <li className="bus-row">
+                  <div className="number"> {bus.LineName}</div>
+                  <div className="platform">{bus.PlatformName}</div>
+                  <div className="towards"> {bus.Towards} </div>
+                  <div className="arrival">
+                    <Shaker updating={bus.updating}>{arrival}</Shaker>
+                  </div>
+                </li>
+              </React.Fragment>
+            );
+          })}
+        </ul>
+      )}
     </div>
   );
 };
